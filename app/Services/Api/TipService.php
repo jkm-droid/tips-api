@@ -12,13 +12,10 @@ class TipService
 {
     /**
      * @return AnonymousResourceCollection
-     * @throws CustomException
      */
     public function viewAllTips()
     {
         $tips = Tip::all();
-        if ($tips->isEmpty())
-            throw new CustomException('Not tips were found',404);
 
         return TipResource::collection($tips);
     }
@@ -27,7 +24,7 @@ class TipService
      * @param $tipRequest
      * @return JsonResponse
      */
-    public function createNewTip($tipRequest): JsonResponse
+    public function createNewTip($tipRequest)
     {
         $tip = new Tip($tipRequest);
         $tip->save();
@@ -44,7 +41,7 @@ class TipService
      * @param $tipId
      * @return JsonResponse
      */
-    public function updateExistingTip($tipRequest, $tipId): JsonResponse
+    public function updateExistingTip($tipRequest, $tipId)
     {
         $existingTip = $this->checkIfExists($tipId);
 

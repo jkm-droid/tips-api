@@ -8,6 +8,7 @@ use App\Http\Resources\UserResource;
 use App\Models\Admin;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class AdminService
@@ -81,9 +82,11 @@ class AdminService
     /**
      * @return JsonResponse
      */
-    public function logoutAdmin(): JsonResponse
+    public function logoutAdmin()
     {
-        request()->user('admin-api')->currentAccessToken()->delete();
+        dd(Auth::guard('admin')->check());
+        if (request()->user('admin-api')->currentAccessToken() != null)
+            request()->user('admin-api')->currentAccessToken()->delete();
 
         return response()->json([
             'success' => true,
